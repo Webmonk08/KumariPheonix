@@ -1,0 +1,354 @@
+.cont {
+    width: 100%;
+    height: 100%;
+    font-family: "pp Neue Montreal";
+    background-color: #fff;
+}
+
+.cont img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cont{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.revealers {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    opacity: 0;
+}
+
+.revealer {
+    flex: 1;
+    width: 100%;
+    background-color: #fff;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.slider-images {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.slider-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.5);
+    width: 100%;
+    height: 100%;
+    visibility: visible;
+    will-change: transform;
+    opacity: 0;
+}
+
+.slider-img:first-child {
+    opacity: 1;
+}
+
+.slider-images.stacked-container {
+    left: 2em;
+    bottom: 2em;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 1em;
+    transform: none;
+    will-change: transform;
+}
+
+.slider-img.stacked {
+    position: relative;
+    width: 150px;
+    height: 100px;
+    transform: none;
+    top: auto;
+    left: auto;
+    opacity: 1;
+    will-change: transform;
+}
+
+.team-heading {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #000;
+    font-family: "pp Neue Montreal";
+    letter-spacing: -0.02em;
+    position: absolute;
+    top: -60px;
+    left: 38%;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Slider specific styles */
+.slider-container {
+    position: relative;
+    width: 120% !important;
+    height: 300px;
+    bottom: -5% !important;
+    margin-left: -29% !important;
+    overflow: hidden;
+}
+
+/* Slider transitions */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-position: center !important;
+    background-size: cover !important;
+    opacity: 0;
+    transition: 1000ms cubic-bezier(1, 0.04, 0.355, 1) all;
+    transform: translateY(-100%);
+    filter: grayscale(100%);
+}
+
+.slide.current {
+    opacity: 1;
+    transform: translateY(0) scale(1.25);
+    z-index: 2;
+}
+
+.slide.next {
+    transform: translateY(-100%);
+    z-index: 3;
+    opacity: 1;
+}
+
+.slide.previous {
+    z-index: 1;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.slide.previous.change {
+    transform: translateY(50%);
+}
+
+.slider-nav {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.slider-nav button {
+    background: none;
+    border: none;
+    color: #000;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.site-logo {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    display: flex;
+    gap: 1em;
+}
+
+.site-logo h1 {
+    color: black;
+    font-family: "pp Neue Montreal";
+    font-size: 5vw;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.site-logo h1 sup {
+    position: absolute;
+    top: -0.125em;
+    font-size: 2rem;
+}
+
+.cover-img {
+    position: absolute;
+    right: 2em;
+    bottom: 2em;
+    width: 40%;
+    height: 50%;
+    clip-path: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+}
+
+.cover-img img {
+    filter: saturate(0);
+}
+
+.site-info {
+    position: absolute;
+    bottom: 2em;
+    left: 2em;
+    width: 50%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.site-info .row {
+    display: flex;
+    gap: 2em;
+}
+
+.site-info .row .slider-col {
+    flex: 1;
+}
+
+.site-info h2 {
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.site-info p {
+    text-transform: uppercase;
+    font-family: "Apercu Mono Pro";
+    font-size: 11px;
+    font-weight: 500;
+    color: black;
+}
+
+.word,
+.nav-item,
+.slider-line {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.word h1,
+.nav-item p,
+.site-info h2 .slider-line span,
+.slider-line p {
+    position: relative;
+    will-change: transform;
+}
+
+.site-info h2 .slider-line span {
+    display: flex;
+    transform: translateY(100%);
+}
+
+.word h1,
+.nav-item p,
+.slider-line p {
+    transform: translateY(100%);
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .slider-content {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .team-heading {
+        position: relative;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        margin: 2em 0 1em 0;
+        padding: 0;
+        left: 0;
+    }
+
+    .slider-container {
+        position: relative !important;
+        width: 90% !important;
+        height: 300px;
+        margin: 5% 5% !important;
+        padding: 0;
+        top: 0;
+        left: 45% !important;
+        transform: translateX(-50%) !important;
+    }
+
+    .slide.current {
+        transform: translateY(0) scale(1.1);
+    }
+
+    .slider-nav {
+        right: -10% !important;
+    }
+
+    .site-logo {
+        padding: 2em 1em;
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        align-items: center;
+        text-align: center;
+    }
+
+    .slider-images.stacked-container {
+        position: relative;
+        width: 90%;
+        padding: 1em;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1em;
+        margin-top: 10vh;
+        margin-right: 27vw;
+        margin-left: 10vw;
+    }
+
+    .slider-img.stacked {
+        width: calc(33.33% - 1em);
+        height: 100px;
+        margin-bottom: 1em;
+    }
+
+    .cover-img {
+        position: relative;
+        width: 90%;
+        height: 300px;
+        margin: 1em auto;
+        right: auto;
+        bottom: auto;
+    }
+
+    .site-info {
+        position: relative;
+        width: 90%;
+        margin: 0 auto;
+        padding: 1em 0;
+    }
+
+    .site-info .row {
+        flex-direction: column;
+        gap: 1.5em;
+    }
+}

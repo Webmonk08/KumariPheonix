@@ -133,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Main timeline setup
-  const mainTl = gsap.timeline()
   const revealerTl = gsap.timeline()
   const scalerTl = gsap.timeline()
 
@@ -158,21 +157,20 @@ document.addEventListener('DOMContentLoaded', () => {
       '<'
     )
 
- 
   scalerTl.to('.img:first-child', {
     scale: 1,
     duration: 2,
     ease: 'power4.inOut'
   })
 
-  // ScrollTrigger.create({
-  //   animation: scalerTl,
-  //   trigger: '.cont', // Change this to the appropriate section
-  //   start: 'top top', // Starts when top of `.images` reaches 80% of viewport
-  //   end: 'bottom bottom',
-  //   scrub: true,
-  //   markers:true
-  // })
+  ScrollTrigger.create({
+    animation: scalerTl,
+    trigger: '.cont', // Change this to the appropriate section
+    start: 'top -200', // Starts when top of `.images` reaches 80% of viewport
+    end: '+=600 bottom',
+    scrub: true,
+    // markers:true
+  })
 
   // Animate remaining images
   const images = document.querySelectorAll('.img:not(:first-child)')
@@ -189,71 +187,106 @@ document.addEventListener('DOMContentLoaded', () => {
     )
   })
 
-// Main timeline setup
-// const mainTl = gsap.timeline({
-//     scrollTrigger: {
-//         trigger: ".cont",  // Starts when `.cont` enters the viewport
-//         start: "top top%",  // When `.cont` reaches 80% of the viewport
-//         end: "bottom 50%",
-//         scrub: false,      // No smooth scrolling effect, runs once
-//         once: true,        // Ensures it runs only once
-//         markers: true      // Debugging markers (remove later)
-//     }
-// });
+  const mainTl = gsap.timeline({
+      scrollTrigger: {
+          trigger: ".cont",  // Starts when `.cont` enters the viewport
+          start: "top 80%",  // When `.cont` reaches 80% of the viewport
+          end: "+=600 bottom",
+          scrub: false,      // No smooth scrolling effect, runs once
+          once: true,        // Ensures it runs only once
+          // markers: true      // Debugging markers (remove later)
+      }
+  });
 
-// Revealer animation
-mainTl
-    .to(".revealer-1", {
-        clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
-        duration: 1.5,
-        ease: "hop",
+  // Revealer animation
+  mainTl
+    .to('.revealer-1', {
+      clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+      duration: 1.5,
+      ease: 'hop'
     })
-    .to(".revealer-2", {
-        clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+    .to(
+      '.revealer-2',
+      {
+        clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
         duration: 1.5,
-        ease: "hop"
-    }, "<")  // Starts at the same time as the first animation
+        ease: 'hop'
+      },
+      '<'
+    ) // Starts at the same time as the first animation
 
     // Individual image animations
-    .to(".img:first-child", {
-        scale: 1,
-        duration: 2,
-        ease: "power4.inOut",
+    .to('.img:first-child', {
+      scale: 1,
+      duration: 2,
+      ease: 'power4.inOut'
     })
 
-    .to(".img:not(:first-child)", {
+    .to(
+      '.img:not(:first-child)',
+      {
         opacity: 1,
         scale: 1,
         duration: 1.25,
-        ease: "power3.out",
+        ease: 'power3.out',
         stagger: 0.2 // Stagger effect for images appearing one by one
-    }, ">-0.5")  // Starts just before the previous animation ends
+      },
+      '>-0.5'
+    ) // Starts just before the previous animation ends
 
     // Move all images to the bottom left
     .add(() => {
-        document.querySelectorAll(".cont .img:not(.main)").forEach(img => img.remove());
-        const state = Flip.getState(".main");
-        const imagesContainer = document.querySelector(".images");
-        imagesContainer.classList.add("stacked-container");
+      document
+        .querySelectorAll('.cont .img:not(.main)')
+        .forEach(img => img.remove())
+      const state = Flip.getState('.main')
+      const imagesContainer = document.querySelector('.images')
+      imagesContainer.classList.add('stacked-container')
 
-        document.querySelectorAll(".main").forEach((img, i) => {
-            img.classList.add("stacked");
-            img.style.order = i;
-        });
+      document.querySelectorAll('.main').forEach((img, i) => {
+        img.classList.add('stacked')
+        img.style.order = i
+      })
 
-        gsap.set(".img.stacked", {
-            clearProps: "transform,top,left"
-        });
+      gsap.set('.img.stacked', {
+        clearProps: 'transform,top,left'
+      })
 
-        return Flip.from(state, {
-            duration: 2,
-            ease: "hop",
-            absolute: true,
-            stagger: {
-                amount: -0.3
-            }
-        });
-    });
+      return Flip.from(state, {
+        duration: 2,
+        ease: 'hop',
+        absolute: true,
+        stagger: {
+          amount: -0.3
+        },
+        onComplete: () => {
+          handleResponsiveLayout()
+          initializeSlider()
+
+
+          gsap.to(teamHeading, {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out'
+          })
+        }
+      })
+    })
+    .to(".word h1, .nav-item p, .line p", {
+      y: 0,
+      opacity: 1,
+      duration: 3,
+      ease: "hop2",
+      stagger: 0.1,
+      delay: 1.25
+  })
+  .to(".cover-img", {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      duration: 2,
+      ease: "hop",
+      delay: -4.75
+  });
 
   // Add hover effects for navigation
   const navItems = document.querySelectorAll('.nav-item')
